@@ -1,5 +1,4 @@
 import praw
-import config
 from nltk.sentiment import SentimentIntensityAnalyzer
 import re
 import pickle
@@ -35,7 +34,7 @@ def getStockSentiments(posts, tickers):
 
         if (matches):
             sentiment_score = sid.polarity_scores(text)['compound']
-            print(f'{text:<150}{",".join(match for match in matches):>20}')
+            print(f'{text:<150}{",".join(match for match in matches):>20}{sentiment_score:>10}')
             for match in matches:
                 ticker_dict[match].append(sentiment_score)
 
@@ -59,7 +58,7 @@ if __name__ == "__main__":
         tickers = pickle.load(f)
 
     subreddit = reddit.subreddit('wallstreetbets')
-    top_posts = subreddit.top(time_filter = 'week', limit=None)
+    top_posts = subreddit.top(time_filter = 'all', limit=None)
 
     sentiments = getStockSentiments(top_posts, tickers)
 
@@ -74,5 +73,5 @@ if __name__ == "__main__":
         time_in_force = TimeInForce.DAY
     )
 
-    order = client.submit_order(order_data = order_details)
+    # order = client.submit_order(order_data = order_details)
     

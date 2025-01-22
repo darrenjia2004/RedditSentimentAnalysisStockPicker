@@ -10,7 +10,7 @@ with open('tickers.csv', 'r') as csvfile:
         tickers.append(ticker)
 
 # Remove common words from the list
-excludedTickers = ['AI']
+excludedTickers = ['AI', 'IQ']
 for ticker in excludedTickers:
     tickers.remove(ticker)
 
